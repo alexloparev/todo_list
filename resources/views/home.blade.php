@@ -5,24 +5,30 @@
       <br>
     <strong> Список дел</strong>
 
-    <div style="width:40%;">
+    <div style="width:90%;">
 
         <form>
             <div class="">
                 <div class="col-lg-12">
                     <div id="row">
                         <div class="input-group m-3">
-                            <div class="input-group-prepend">
+                            <div class="input-group-prepend align-items-center col-8">
+                                <span id="Todo">Ведите текст заметки</span>
 
                             </div>
-                            <input type="text"
-                                   class="form-control m-input">
+                            <button class="btn btn-warning"
+                                    id="Edit" type="button">
+                                <i class="bi bi-pen"></i>
+
+                            </button>
+                            &nbsp;
                             <button class="btn btn-info"
                                     id="AddImage" type="button">
                                 <i class="bi bi-image"></i>
 
                             </button>
                             &nbsp;
+
 
                             <button class="btn btn-danger"
                                     id="DeleteRow" type="button">
@@ -53,13 +59,18 @@
         $("#rowAdder").click(function () {
             newRowAdd =
                 '<div id="row"> <div class="input-group m-3">' +
-                '<div class="input-group-prepend"></div>' +
-                '<input type="text" class="form-control m-input"> ' +
+                '<div class="input-group-prepend align-items-center col-8">' +
+                '<span id="Todo">Ведите текст заметки</span></div>' +
+                '</button>' +
+                '<button class="btn btn-warning"' +
+                'id="Edit" type="button">\n' +
+                '<i class="bi bi-pen"></i>' +
+                '</button>&nbsp' +
                 '<button class="btn btn-info"' +
                 'id="AddImage" type="button">\n' +
                 '<i class="bi bi-image"></i>' +
                 '</button>' +
-                '&nbsp;'+
+                '&nbsp;' +
                 '<button class="btn btn-danger" id="DeleteRow" type="button">' +
                 '<i class="bi bi-trash"></i> </button> ' +
                 '&nbsp; &nbsp;' +
@@ -74,7 +85,23 @@
 
         $("body").on("click", "#DeleteRow", function () {
             $(this).parents("#row").remove();
-        })
+        });
+
+        $("body").on("click","#Todo", function() {
+            $(this).attr('contentEditable', true);
+        }).blur(
+            function() {
+                $(this).attr('contentEditable', false);
+            });
+
+        $("body").on("click","#Edit", function() {
+            $("#Todo").attr('contentEditable', true);
+        });
+
+        $("body").on("click","#AddImage", function() {
+            $('input[type=file]').trigger('click');
+        });
+
     </script>
     </div>
 @endsection
