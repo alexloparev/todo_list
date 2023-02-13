@@ -5,12 +5,22 @@
       <br>
     <strong> Список дел</strong>
 
+
     <div style="width:90%;">
 
         <form>
             <div class="">
                 <div class="col-lg-12">
                     <div id="row">
+                        <div class="input-group-prepend align-items-center col-8">
+
+                            <input type="text">
+                            <button id="Filter" type="button"
+                                    class="btn btn-dark">
+						<span class="bi bi-search">
+						</span> Найти
+                            </button>
+                        </div>
                         <div class="input-group m-3">
                             <div class="input-group-prepend align-items-center col-8">
                                 <span id="Todo">Ведите текст заметки</span>
@@ -48,6 +58,11 @@
                             class="btn btn-dark">
 						<span class="bi bi-plus-square-dotted">
 						</span> Добавить
+                    </button>&nbsp
+                    <button id="tagAdder" type="button"
+                            class="btn btn-warning">
+						<span class="bi bi-plus-square-dotted">
+						</span> Добавить тег
                     </button>
                 </div>
             </div>
@@ -99,6 +114,7 @@
         });
 
         $("body").on("click","#AddImage", function() {
+
             $('input[type=file]').trigger('click');
         });
 
