@@ -36,7 +36,7 @@
                                     id="AddImage" type="button">
                                 <i class="bi bi-image"></i>
 
-                            </button>
+                            </button><input id="fileInput" type="file" hidden="true"/>
                             &nbsp;
 
 
@@ -114,7 +114,7 @@
         });
 
         $("body").on("click","#AddImage", function() {
-
+console.log("click")
             $('input[type=file]').trigger('click');
         });
 
