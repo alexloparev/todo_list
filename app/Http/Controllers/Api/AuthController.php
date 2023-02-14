@@ -1,15 +1,21 @@
 <?php
 
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
+use Laravel\Sanctum\HasApiTokens;
+use Laravel\Sanctum\PersonalAccessToken;
+
 
 class AuthController extends Controller
+
 {
+    use HasApiTokens;
 
     public function register(AuthRequest $request)
     {
@@ -39,7 +45,23 @@ class AuthController extends Controller
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
         ])->onlyInput('email');
-
-
     }
+
+    public function token(Request $request)
+
+    {
+        if (!is_null(auth()->user())) {
+            if (empty(auth()->user()?->tokens->count())) {
+                $token = auth()->user()?->createToken('auth_token')->plainTextToken;
+                return response()->json([
+                    'access_token' => $token,
+                    'token_type' => 'Bearer',
+                ]);
+            }
+        } else return response()->json([
+            'status' => false,
+            'message' => 'Not auth',
+        ]);
+    }
+
 }

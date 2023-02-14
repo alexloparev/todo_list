@@ -7,9 +7,6 @@ use App\Http\Requests\TagRequest;
 use App\Http\Resources\TagsResourceCollection;
 use App\Http\Resources\TodoResourceCollection;
 use App\Models\Tag;
-use App\Models\Todo;
-use App\Models\TagTodo;
-use Illuminate\Http\Request;
 
 class TagController extends Controller
 {

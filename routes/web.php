@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -16,6 +17,6 @@ use Illuminate\Support\Facades\Route;
 
 
 Auth::routes();
-
 Route::get('/', [\App\Http\Controllers\Web\HomeController::class, 'index'])->name('home');
 
+Route::get('/api/token', [AuthController::class, 'token']);

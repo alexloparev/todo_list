@@ -26,7 +26,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/auth', [AuthController::class, 'auth']);
 
+//Route::group(['middleware' => ['web']], function () {
+//    Route::get('/token', [AuthController::class, 'token']);
+//});
+
 Route::group(['middleware' => 'auth:sanctum'], function () {
+
     Route::get('todos', [TodosController::class, 'index']);
     Route::post('todos/{todo}', [TodosController::class, 'edit']);
     Route::post('todos', [TodosController::class, 'create']);

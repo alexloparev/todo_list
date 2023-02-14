@@ -1,6 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
+    @auth()
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        const user = @json(Auth::user());
+
+        axios.get('/api/token').then(resp => {
+
+            console.log(resp.data);
+        });
+    </script>
+    @endauth
     <div class="container">
       <br>
     <strong> Список дел</strong>
