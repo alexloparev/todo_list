@@ -48,7 +48,6 @@ class AuthController extends Controller
     }
 
     public function token(Request $request)
-
     {
         if (!is_null(auth()->user())) {
             if (empty(auth()->user()?->tokens->count())) {
