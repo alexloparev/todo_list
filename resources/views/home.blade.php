@@ -4,21 +4,21 @@
     @auth()
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script>
-            async function token() {
-                // axios.get('/api/token').then(resp => {
-                //     token = resp.data.access_token;
-                // });
-                let res = await axios.get('/api/token');
-                return res.access_token;
+            function token() {
+                return axios.get('/api/token').then(response => response.data.access_token)
             }
-            token().then(console.log());
-            const config = {
-                headers: {Authorization: `Bearer ${token}`}
-            };
-            axios.get('/api/todos', config).then(resp => {
 
-                console.log(resp.data);
-            });
+            token().then((access_token) => {
+                console.log(access_token)
+                const config = {
+                    headers: {Authorization: `Bearer ${access_token}`}
+                };
+                axios.get('/api/todos', config).then(resp => {
+                    console.log(resp.data);
+                })
+            })
+
+
         </script>
     @endauth
     <div class="container">
