@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="todo@localhost" uuid="d070cb1a-3416-4a55-9ad6-4f9ec9ddb70a">
+    <data-source source="LOCAL" name="list@localhost" uuid="fe807cd1-7955-4ba7-b72f-0381dfa447e7">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/todo</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:3306/list</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

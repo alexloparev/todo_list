@@ -50,13 +50,14 @@ class AuthController extends Controller
     public function token(Request $request)
     {
         if (!is_null(auth()->user())) {
-            if (empty(auth()->user()?->tokens->count())) {
-                $token = auth()->user()?->createToken('auth_token')->plainTextToken;
-                return response()->json([
-                    'access_token' => $token,
-                    'token_type' => 'Bearer',
-                ]);
-            }
+//            if (empty(auth()->user()?->tokens->count())) {
+            auth()->user()?->tokens()->delete();
+            $token = auth()->user()?->createToken('auth_token')->plainTextToken;
+            return response()->json([
+                'access_token' => $token,
+                'token_type' => 'Bearer',
+            ]);
+//            }
         } else return response()->json([
             'status' => false,
             'message' => 'Not auth',

@@ -2,133 +2,144 @@
 
 @section('content')
     @auth()
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script>
-        const user = @json(Auth::user());
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script>
+            async function token() {
+                // axios.get('/api/token').then(resp => {
+                //     token = resp.data.access_token;
+                // });
+                let res = await axios.get('/api/token');
+                return res.access_token;
+            }
+            token().then(console.log());
+            const config = {
+                headers: {Authorization: `Bearer ${token}`}
+            };
+            axios.get('/api/todos', config).then(resp => {
 
-        axios.get('/api/token').then(resp => {
-
-            console.log(resp.data);
-        });
-    </script>
+                console.log(resp.data);
+            });
+        </script>
     @endauth
     <div class="container">
-      <br>
-    <strong> Список дел</strong>
+        <br>
+        <strong> Список дел</strong>
 
 
-    <div style="width:90%;">
+        <div style="width:90%;">
 
-        <form>
-            <div class="">
-                <div class="col-lg-12">
-                    <div id="row">
-                        <div class="input-group-prepend align-items-center col-8">
+            <form>
+                <div class="">
+                    <div class="col-lg-12">
+                        <div id="row">
+                            <div class="input-group-prepend align-items-center col-8">
 
-                            <input type="text">
-                            <button id="Filter" type="button"
-                                    class="btn btn-dark">
+                                <input type="text">
+                                <button id="Filter" type="button"
+                                        class="btn btn-dark">
 						<span class="bi bi-search">
 						</span> Найти
-                            </button>
-                        </div>
-                        <div class="input-group m-3">
-                            <div class="input-group-prepend align-items-center col-8">
-                                <span id="Todo">Ведите текст заметки</span>
-
+                                </button>
                             </div>
-                            <button class="btn btn-warning"
-                                    id="Edit" type="button">
-                                <i class="bi bi-pen"></i>
+                            <div class="input-group m-3">
+                                <div class="input-group-prepend align-items-center col-8">
+                                    <span id="Todo">Ведите текст заметки</span>
 
-                            </button>
-                            &nbsp;
-                            <button class="btn btn-info"
-                                    id="AddImage" type="button">
-                                <i class="bi bi-image"></i>
+                                </div>
+                                <button class="btn btn-warning"
+                                        id="Edit" type="button">
+                                    <i class="bi bi-pen"></i>
 
-                            </button><input id="fileInput" type="file" hidden="true"/>
-                            &nbsp;
+                                </button>
+                                &nbsp;
+                                <button class="btn btn-info"
+                                        id="AddImage" type="button">
+                                    <i class="bi bi-image"></i>
+
+                                </button>
+                                <input id="fileInput" type="file" hidden="true"/>
+                                &nbsp;
 
 
-                            <button class="btn btn-danger"
-                                    id="DeleteRow" type="button">
-                                <i class="bi bi-trash"></i>
+                                <button class="btn btn-danger"
+                                        id="DeleteRow" type="button">
+                                    <i class="bi bi-trash"></i>
 
-                            </button>&nbsp; &nbsp;
-                            <div class="form-check form-switch d-flex align-items-center" >
-                                <input class="form-check-input" type="checkbox" id="shared">&nbsp;
-                                <label class="form-check-label" for="shared">   Доступ  </label>
+                                </button>&nbsp; &nbsp;
+                                <div class="form-check form-switch d-flex align-items-center">
+                                    <input class="form-check-input" type="checkbox" id="shared">&nbsp;
+                                    <label class="form-check-label" for="shared"> Доступ </label>
+                                </div>
                             </div>
+
                         </div>
 
-                    </div>
-
-                    <div id="newinput"></div>
-                    <button id="rowAdder" type="button"
-                            class="btn btn-dark">
+                        <div id="newinput"></div>
+                        <button id="rowAdder" type="button"
+                                class="btn btn-dark">
 						<span class="bi bi-plus-square-dotted">
 						</span> Добавить
-                    </button>&nbsp
-                    <button id="tagAdder" type="button"
-                            class="btn btn-warning">
+                        </button>
+                        &nbsp
+                        <button id="tagAdder" type="button"
+                                class="btn btn-warning">
 						<span class="bi bi-plus-square-dotted">
 						</span> Добавить тег
-                    </button>
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </form>
-    </div>
+            </form>
+        </div>
 
-    <script type="text/javascript">
+        <script type="text/javascript">
 
-        $("#rowAdder").click(function () {
-            newRowAdd =
-                '<div id="row"> <div class="input-group m-3">' +
-                '<div class="input-group-prepend align-items-center col-8">' +
-                '<span id="Todo">Ведите текст заметки</span></div>' +
-                '</button>' +
-                '<button class="btn btn-warning"' +
-                'id="Edit" type="button">\n' +
-                '<i class="bi bi-pen"></i>' +
-                '</button>&nbsp' +
-                '<button class="btn btn-info"' +
-                'id="AddImage" type="button">\n' +
-                '<i class="bi bi-image"></i>' +
-                '</button>' +
-                '&nbsp;' +
-                '<button class="btn btn-danger" id="DeleteRow" type="button">' +
-                '<i class="bi bi-trash"></i> </button> ' +
-                '&nbsp; &nbsp;' +
-                '<div class="form-check form-switch d-flex align-items-center" >\n' +
-                '<input class="form-check-input" type="checkbox" id="shared">&nbsp;\n' +
-                '<label class="form-check-label" for="shared">   Доступ  </label>\n' +
-                '</div>' +
-                '</div> </div>';
+            $("#rowAdder").click(function () {
+                newRowAdd =
+                    '<div id="row"> <div class="input-group m-3">' +
+                    '<div class="input-group-prepend align-items-center col-8">' +
+                    '<span id="Todo">Ведите текст заметки</span></div>' +
+                    '</button>' +
+                    '<button class="btn btn-warning"' +
+                    'id="Edit" type="button">\n' +
+                    '<i class="bi bi-pen"></i>' +
+                    '</button>&nbsp' +
+                    '<button class="btn btn-info"' +
+                    'id="AddImage" type="button">\n' +
+                    '<i class="bi bi-image"></i>' +
+                    '</button>' +
+                    '&nbsp;' +
+                    '<button class="btn btn-danger" id="DeleteRow" type="button">' +
+                    '<i class="bi bi-trash"></i> </button> ' +
+                    '&nbsp; &nbsp;' +
+                    '<div class="form-check form-switch d-flex align-items-center" >\n' +
+                    '<input class="form-check-input" type="checkbox" id="shared">&nbsp;\n' +
+                    '<label class="form-check-label" for="shared">   Доступ  </label>\n' +
+                    '</div>' +
+                    '</div> </div>';
 
-            $('#newinput').append(newRowAdd);
-        });
-
-        $("body").on("click", "#DeleteRow", function () {
-            $(this).parents("#row").remove();
-        });
-
-        $("body").on("click","#Todo", function() {
-            $(this).attr('contentEditable', true);
-        }).blur(
-            function() {
-                $(this).attr('contentEditable', false);
+                $('#newinput').append(newRowAdd);
             });
 
-        $("body").on("click","#Edit", function() {
-            $("#Todo").attr('contentEditable', true);
-        });
+            $("body").on("click", "#DeleteRow", function () {
+                $(this).parents("#row").remove();
+            });
 
-        $("body").on("click","#AddImage", function() {
-console.log("click")
-            $('input[type=file]').trigger('click');
-        });
+            $("body").on("click", "#Todo", function () {
+                $(this).attr('contentEditable', true);
+            }).blur(
+                function () {
+                    $(this).attr('contentEditable', false);
+                });
 
-    </script>
+            $("body").on("click", "#Edit", function () {
+                $("#Todo").attr('contentEditable', true);
+            });
+
+            $("body").on("click", "#AddImage", function () {
+                console.log("click")
+                $('input[type=file]').trigger('click');
+            });
+
+        </script>
     </div>
 @endsection
