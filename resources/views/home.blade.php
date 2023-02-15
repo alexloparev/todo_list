@@ -4,19 +4,30 @@
     @auth()
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script>
-            function token() {
+            function getToken() {
                 return axios.get('/api/token').then(response => response.data.access_token)
             }
 
-            token().then((access_token) => {
-                console.log(access_token)
-                const config = {
-                    headers: {Authorization: `Bearer ${access_token}`}
-                };
+            function getTodos(config) {
                 axios.get('/api/todos', config).then(resp => {
                     console.log(resp.data);
                 })
-            })
+                    .catch(
+                        storeTokenLocal()
+                    )
+            }
+
+            function storeTokenLocal() {
+                getToken().then((access_token) => {
+                    localStorage.setItem('access_token', `Bearer ${access_token}`);
+                })
+            }
+
+            if (!localStorage.access_token) storeTokenLocal()
+            let config = {
+                headers: {Authorization: localStorage.access_token}
+            }
+            getTodos(config)
 
 
         </script>
